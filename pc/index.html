@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>陈浩网站</title>
+<script src="../lib/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+  pc {{ message }}
+</div>
+<!-- JavaScript 代码需要放在尾部（指定的HTML元素之后） -->
+<script>
+new Vue({
+    el:'#app',
+    data: {
+        message:'Hello World!'
+    }
+});
+</script>
+</body>
+</html>

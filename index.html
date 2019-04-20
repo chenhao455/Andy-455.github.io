@@ -3,20 +3,24 @@
 <head>
 <meta charset="utf-8">
 <title>陈浩网站</title>
-<script src="lib/vue.min.js"></script>
 </head>
 <body>
-<div id="app">
-  {{ message }}
+<div>陈浩网站首页</div>
+<div>
+  硬件平台
+  <span id="platform"></span>
 </div>
-<!-- JavaScript 代码需要放在尾部（指定的HTML元素之后） -->
-<script>
-new Vue({
-    el:'#app',
-    data: {
-        message:'Hello World!'
-    }
-});
-</script>
 </body>
+<script>
+  var platform = navigator.platform;
+  var oldHref = window.location.href;
+  var indexFile = '/index.html';
+  if(platform === 'iPhone'){
+    window.location.href = oldHref.replace(indexFile, '/mobile' + indexFile);
+  }else if(platform === 'Win32'){//PC
+    window.location.href = oldHref.replace(indexFile, '/pc' + indexFile);
+  }
+  var ele = document.getElementById('platform');
+  ele.innerText = platform;
+</script>
 </html>
