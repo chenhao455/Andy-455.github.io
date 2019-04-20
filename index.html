@@ -6,21 +6,32 @@
 </head>
 <body>
 <div>陈浩网站首页</div>
-<div>
-  硬件平台
+<p>
+  <span>硬件平台</span>
   <span id="platform"></span>
-</div>
+</p>
+<a id="a-pc" href="pc/index.html">跳到pc端首页</a>
+<a id="a-mobile" href="mobile/index.html">跳到mobile端首页</a>
 </body>
 <script>
   var platform = navigator.platform;
-  var oldHref = window.location.href;
-  var indexFile = '/index.html';
-  if(platform === 'iPhone'){
-    window.location.href = oldHref.replace(indexFile, '/mobile' + indexFile);
-  }else if(platform === 'Win32'){//PC
-    window.location.href = oldHref.replace(indexFile, '/pc' + indexFile);
-  }
   var ele = document.getElementById('platform');
   ele.innerText = platform;
+  var oldHref = window.location.href;
+  var indexFile = '/index.html';
+  var isHasIndex = oldHref.indexOf(indexFile)>=0;
+  if(isHasIndex){
+    if(platform === 'iPhone'){
+      window.location.href = oldHref.replace(indexFile, '/mobile' + indexFile);
+    }else if(platform === 'Win32'){//PC
+      window.location.href = oldHref.replace(indexFile, '/pc' + indexFile);
+    }
+  }else {
+    if(platform === 'iPhone'){
+      window.location.href = oldHref + '/mobile' + indexFile;
+    }else if(platform === 'Win32'){//PC
+      window.location.href = oldHref + '/pc' + indexFile;
+    }
+  }
 </script>
 </html>
