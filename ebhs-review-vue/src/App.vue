@@ -19,8 +19,8 @@ export default {
   methods:{
     ...mapActions(['setStore']),
     async getWebData(){
-      this.$http.get(URL).then(({data}) => {
-        console.log('reviewTasks.json:', data)
+      this.$http.get(URL).then((res) => {
+        console.log('reviewTasks.json res:', res)
       })
     }
   }
