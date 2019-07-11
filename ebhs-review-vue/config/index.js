@@ -50,10 +50,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../../www/index.html'),
+    index: path.resolve(__dirname, '../../ebhs-review/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../www'),
+    assetsRoot: path.resolve(__dirname, '../../ebhs-review'),
     assetsSubDirectory: '',
     assetsPublicPath: '',
 
