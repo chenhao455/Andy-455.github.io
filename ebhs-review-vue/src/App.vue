@@ -6,7 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-const URL = 'https://haomiaozhichen.github.io/ebhs-review-data.js'
+const URL = 'https://haomiaozhichen.github.io/ebhs-review-data.json'
 export default {
   name: 'App',
   data () {
