@@ -3,7 +3,7 @@ const jsonData = {
   curveList:[
     {
       id:'star-0',
-      name:'star-0掌握曲线',
+      name:'star-0掌握曲线3',
       desc:'有不重要的知识点 无星标知识点',
       dotList:[
         { value:10,unit:'day'},
