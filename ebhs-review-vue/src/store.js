@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { format, addDate } from '@/util'
-import jsonData from '../data'
 Vue.use(Vuex);
 
 const SET_STORE = 'SET_STORE';
@@ -9,7 +8,121 @@ const SET_STORE = 'SET_STORE';
 export default new Vuex.Store({
   state:{
     testObj:null,
-    ...jsonData
+    curveList:[
+    //   {
+    //   id:'1',
+    //   name:'记单词曲线'
+    // },
+    {
+      id:'star-0',
+      name:'star-0掌握曲线',
+      desc:'有不重要的知识点 无星标知识点',
+      dotList:[
+        { value:10,unit:'day'},
+        { value:30,unit:'day'},
+        { value:50,unit:'day'},
+        { value:70,unit:'day'},
+        { value:100,unit:'day'},
+        { value:300,unit:'day'},
+        { value:500,unit:'day'},
+        { value:800,unit:'day'}//month
+      ]
+    },{
+      id:'star1-3',
+      name:'star1-3曲线',
+      desc:'星标知识点1-3个',
+      dotList:[
+        { value:5,unit:'day'},
+        { value:10,unit:'day'},
+        { value:30,unit:'day'},
+        { value:50,unit:'day'},
+        { value:70,unit:'day'},
+        { value:100,unit:'day'},
+        { value:300,unit:'day'},
+        { value:500,unit:'day'}
+      ]
+    },{
+      id:'star4-6',
+      name:'star4-6曲线',
+      desc:'星标知识点4-6个',
+      dotList:[
+        { value:3,unit:'day'},
+        { value:5,unit:'day'},
+        { value:10,unit:'day'},
+        { value:30,unit:'day'},
+        { value:50,unit:'day'},
+        { value:70,unit:'day'},
+        { value:100,unit:'day'},
+        { value:300,unit:'day'},
+        { value:500,unit:'day'}
+      ]
+    },{
+      id:'star7-9',
+      name:'star7-9曲线',
+      desc:'星标知识点7-9个',
+      dotList:[
+        { value:2,unit:'day'},
+        { value:3,unit:'day'},
+        { value:5,unit:'day'},
+        { value:10,unit:'day'},
+        { value:30,unit:'day'},
+        { value:50,unit:'day'},
+        { value:70,unit:'day'},
+        { value:100,unit:'day'},
+        { value:300,unit:'day'},
+      ]
+    },{
+      id:'star10+',
+      name:'star10+曲线',
+      desc:'星标知识点大于10个',
+      dotList:[
+        { value:1,unit:'day'},
+        { value:2,unit:'day'},
+        { value:4,unit:'day'},
+        { value:7,unit:'day'},
+        { value:15,unit:'day'},
+        { value:30,unit:'day'},
+        { value:60,unit:'day'},
+        { value:105,unit:'day'},
+        { value:225,unit:'day'},
+      ]
+    }],
+    taskList:[{
+      id:'task1',
+      name:'阮一峰JS教程 1.语法 数据类型',
+      desc: '',
+      href: '',
+      curveTypeId:'star-0',
+      createTime:'2019/07/09 18:00:00'
+    },{
+      id:'task2',
+      name:'阮一峰JS教程 2.1.数值',
+      desc: '',
+      href: '',
+      curveTypeId:'star1-3',
+      createTime:'2019/07/10 18:00:00'
+    },{
+      id:'task3',
+      name:'阮一峰JS教程 2.3.数值转换',
+      desc: '',
+      href: '',
+      curveTypeId:'star1-3',
+      createTime:'2019/07/10 18:00:00'
+    },{
+      id:'task3',
+      name:'阮一峰JS教程 2.4.字符串',
+      desc: '',
+      href: '',
+      curveTypeId:'star1-3',
+      createTime:'2019/07/10 18:00:00'
+    },{
+      id:'task3',
+      name:'阮一峰JS教程 2.5.对象',
+      desc: '',
+      href: '',
+      curveTypeId:'star1-3',
+      createTime:'2019/07/10 18:00:00'
+    }]
   },
   getters:{
     taskDayObj(state){
