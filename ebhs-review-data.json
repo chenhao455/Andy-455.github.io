@@ -1,5 +1,5 @@
 // 正确
-const jsonData = {
+{
   curveList:[
     {
       id:'star-0',
@@ -111,5 +111,4 @@ const jsonData = {
       curveTypeId:'star1-3',
       createTime:'2019/07/10 18:00:00'
     }]
-};
-export default jsonData;
+}

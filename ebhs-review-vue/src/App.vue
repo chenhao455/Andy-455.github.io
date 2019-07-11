@@ -6,6 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+const URL = 'https://haomiaozhichen.github.io/ebhs-review-data.js'
 export default {
   name: 'App',
   data () {
@@ -13,12 +14,12 @@ export default {
   },
   computed: {},
   created(){
-    // this.getWebData()
+    this.getWebData()
   },
   methods:{
     ...mapActions(['setStore']),
     async getWebData(){
-      this.$http.post('https://qcloud.coding.net/u/haomiaozhichen/p/CloudCode/git/raw/master/reviewTasks.json').then(({data}) => {
+      this.$http.post(URL).then(({data}) => {
         console.log('reviewTasks.json:', JSON.stringify(data,null,4))
       })
     }
