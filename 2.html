@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极地环境问题多米诺链游戏</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1a2d, #162b4d);
+            color: #e0f7fa;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(13, 29, 49, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            margin-top: 20px;
+            border: 1px solid #2a9d8f;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .polar-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(76, 201, 240, 0.1) 0%, transparent 20%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(26, 54, 93, 0.7);
+            border-radius: 15px;
+            border: 1px solid #457b9d;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #a8dadc;
+            text-shadow: 0 0 15px rgba(168, 218, 220, 0.7);
+            background: linear-gradient(to right, #4cc9f0, #2a9d8f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #90e0ef;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(144, 224, 239, 0.5);
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto 25px;
+            color: #bbdefb;
+        }
+        
+        .game-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-section, .chain-section {
+            background: rgba(31, 64, 104, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #457b9d;
+            backdrop-filter: blur(5px);
+        }
+        
+        h2 {
+            color: #a8dadc;
+            border-bottom: 2px solid #2a9d8f;
+            padding-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        h2 i {
+            color: #4cc9f0;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            min-height: 220px;
+        }
+        
+        .card {
+            width: 170px;
+            height: 170px;
+            background: linear-gradient(145deg, #1d3557, #457b9d);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            border: 2px solid #4cc9f0;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .card:nth-child(2n) {
+            animation-delay: 0.5s;
+        }
+        
+        .card:nth-child(3n) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(145deg, #2a9d8f, #1d3557);
+            z-index: 10;
+        }
+        
+        .card-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #a8dadc;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.7);
+        }
+        
+        .card-desc {
+            font-size: 0.95rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 25, 47, 0.95);
+            padding: 15px;
+            border-radius: 0 0 12px 12px;
+            line-height: 1.5;
+        }
+        
+        .card:hover .card-desc {
+            opacity: 1;
+        }
+        
+        .chain-area {
+            min-height: 250px;
+            border: 3px dashed #2a9d8f;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(42, 157, 143, 0.08);
+            transition: all 0.4s ease;
+        }
+        
+        .chain-area.active {
+            background: rgba(42, 157, 143, 0.15);
+            border-color: #4cc9f0;
+        }
+        
+        .chain-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            min-height: 200px;
+            align-items: center;
+        }
+        
+        .chain-card {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(145deg, #2a9d8f, #1d3557);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            border: 2px solid #4cc9f0;
+            position: relative;
+            overflow: hidden;
+            animation: appear 0.5s ease;
+        }
+        
+        @keyframes appear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .chain-card .card-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .remove-card {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .chain-card:hover .remove-card {
+            opacity: 1;
+        }
+        
+        .arrow {
+            font-size: 2.5rem;
+            color: #4cc9f0;
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 14px 35px;
+            font-size: 1.2rem;
+            background: linear-gradient(to right, #2a9d8f, #1d3557);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            border: 2px solid #4cc9f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #1d3557, #2a9d8f);
+        }
+        
+        button:active {
+            transform: translateY(2px);
+        }
+        
+        button:disabled {
+            background: linear-gradient(to right, #5a6978, #7a8a9a);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: #7a8a9a;
+        }
+        
+        .validation-result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            line-height: 1.6;
+            background: rgba(20, 40, 70, 0.8);
+            border: 2px solid;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success {
+            color: #a5d6a7;
+            border-color: #66bb6a;
+            box-shadow: 0 0 25px rgba(102, 187, 106, 0.4);
+        }
+        
+        .error {
+            color: #ef9a9a;
+            border-color: #f44336;
+            box-shadow: 0 0 25px rgba(244, 67, 54, 0.4);
+        }
+        
+        .instructions {
+            background: rgba(31, 64, 104, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            border: 1px solid #457b9d;
+            backdrop-filter: blur(5px);
+        }
+        
+        .instructions h3 {
+            color: #a8dadc;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .instructions-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .instructions-column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .instructions ol {
+            padding-left: 25px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .instructions li i {
+            color: #4cc9f0;
+            margin-top: 5px;
+        }
+        
+        .logic-chains {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(31, 64, 104, 0.7);
+            border-radius: 15px;
+            border: 1px solid #457b9d;
+            backdrop-filter: blur(5px);
+        }
+        
+        .logic-chains h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            justify-content: center;
+        }
+        
+        .chains-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+        
+        .chain-example {
+            background: rgba(20, 40, 70, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 300px;
+            border: 1px solid #2a9d8f;
+            transition: transform 0.3s ease;
+        }
+        
+        .chain-example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chain-example h4 {
+            color: #a8dadc;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chain-example p {
+            line-height: 1.7;
+            color: #bbdefb;
+        }
+        
+        .placeholder {
+            color: #90e0ef;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            background: rgba(31, 64, 104, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #457b9d;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            min-width: 150px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #a8dadc;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            color: #4cc9f0;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        
+        .iceberg {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            font-size: 15rem;
+            color: rgba(168, 218, 220, 0.1);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 900px) {
+            .card {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .chain-card {
+                width: 120px;
+                height: 120px;
+                font-size: 0.95rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .chain-card {
+                width: 100px;
+                height: 100px;
+                font-size: 0.85rem;
+            }
+            
+            .arrow {
+                font-size: 2rem;
+            }
+            
+            button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .instructions-column {
+                min-width: 100%;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-snowflake"></i> 极地环境问题多米诺链游戏</h1>
+        <div class="subtitle">探索环境问题的连锁反应</div>
+        <div class="intro">
+            通过构建多米诺链，了解全球变暖、石油泄漏、海洋垃圾等环境问题如何相互作用并威胁极地生态系统。
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="polar-bg"></div>
+        <div class="iceberg">🧊</div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">已抽卡片</div>
+                <div class="stat-value" id="drawnCards">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">链条长度</div>
+                <div class="stat-value" id="chainLength">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">验证结果</div>
+                <div class="stat-value" id="validationStatus">-</div>
+            </div>
+        </div>
+        
+        <div class="game-section">
+            <div class="card-section">
+                <h2><i class="fas fa-cards"></i> 环境问题卡片</h2>
+                <div class="card-container" id="cardContainer">
+                    <div class="placeholder">点击下方按钮抽取8张环境问题卡片</div>
+                </div>
+            </div>
+            
+            <div class="chain-section">
+                <h2><i class="fas fa-link"></i> 构建逻辑链条</h2>
+                <div class="chain-area" id="chainArea">
+                    <div class="chain-container" id="chainContainer">
+                        <div class="placeholder">双击卡片或拖拽到此处构建多米诺链条</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="drawCardsBtn"><i class="fas fa-dice"></i> 抽取卡片 (8张)</button>
+                <button id="resetBtn"><i class="fas fa-redo"></i> 重置链条</button>
+                <button id="validateBtn" disabled><i class="fas fa-check-circle"></i> 验证逻辑链条</button>
+            </div>
+            
+            <div class="validation-result" id="validationResult">
+                等待验证您的逻辑链条...
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> 游戏说明</h3>
+            <div class="instructions-content">
+                <div class="instructions-column">
+                    <ol>
+                        <li><i class="fas fa-mouse-pointer"></i> <strong>抽取卡片</strong>：点击"抽取卡片"按钮随机获取8张环境问题卡片</li>
+                        <li><i class="fas fa-hand-pointer"></i> <strong>添加卡片</strong>：双击卡片或拖拽卡片到构建区</li>
+                        <li><i class="fas fa-search"></i> <strong>悬停查看</strong>：鼠标悬停在卡片上查看问题详细解释</li>
+                    </ol>
+                </div>
+                <div class="instructions-column">
+                    <ol start="4">
+                        <li><i class="fas fa-check-double"></i> <strong>验证逻辑</strong>：点击"验证逻辑链条"检查因果关系</li>
+                        <li><i class="fas fa-times-circle"></i> <strong>移除卡片</strong>：悬停在构建区卡片上点击X移除</li>
+                        <li><i class="fas fa-bullseye"></i> <strong>目标</strong>：构建至少3张卡片的有效逻辑链</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="logic-chains">
+            <h2><i class="fas fa-project-diagram"></i> 环境问题逻辑关系示例</h2>
+            <div class="chains-container">
+                <div class="chain-example">
+                    <h4><i class="fas fa-fire"></i> 全球变暖 → 冰川融化 → 海平面上升</h4>
+                    <p>全球变暖导致极地温度升高 → 冰川和冰盖加速融化 → 全球海平面上升，威胁沿海地区</p>
+                </div>
+                <div class="chain-example">
+                    <h4><i class="fas fa-oil-well"></i> 石油开采 → 石油泄漏 → 海洋污染</h4>
+                    <p>极地石油开采活动增加 → 发生石油泄漏事故 → 海洋生态系统受到严重污染</p>
+                </div>
+                <div class="chain-example">
+                    <h4><i class="fas fa-ship"></i> 极地旅游 → 船舶排放 → 全球变暖</h4>
+                    <p>极地旅游日益流行 → 旅游船舶排放温室气体 → 加剧全球变暖问题</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 卡片数据（10张卡片）
+        const cardsData = [
+            {
+                id: 'globalWarming',
+                title: '全球变暖',
+                icon: '🌡️',
+                description: '极地地区气温上升速度是全球平均水平的两倍，导致冰川融化、海平面上升和生态系统剧变。'
+            },
+            {
+                id: 'iceMelting',
+                title: '冰川融化',
+                icon: '🧊',
+                description: '极地冰川和冰盖加速融化，导致海平面上升，改变海洋盐度和洋流模式。'
+            },
+            {
+                id: 'seaLevelRise',
+                title: '海平面上升',
+                icon: '📈',
+                description: '冰川融化导致全球海平面上升，威胁沿海城市和岛国，改变海岸线生态系统。'
+            },
+            {
+                id: 'wildlifeHunting',
+                title: '捕杀野生动物',
+                icon: '🐻‍❄️',
+                description: '非法捕猎、过度捕捞和商业开发导致北极熊、海豹、鲸鱼等物种数量锐减，破坏食物链平衡。'
+            },
+            {
+                id: 'oilExtraction',
+                title: '石油开采',
+                icon: '⛽',
+                description: '极地地区石油资源开采增加，破坏原始环境，增加生态灾难风险。'
+            },
+            {
+                id: 'oilSpill',
+                title: '石油泄漏',
+                icon: '🛢️',
+                description: '极地资源开采和航运增加导致漏油风险，原油污染破坏海洋生态，影响生物繁衍。'
+            },
+            {
+                id: 'marinePollution',
+                title: '海洋污染',
+                icon: '🌊',
+                description: '石油泄漏和塑料垃圾导致海洋污染，毒害海洋生物，破坏整个海洋生态系统。'
+            },
+            {
+                id: 'polarTourism',
+                title: '极地旅游',
+                icon: '🚢',
+                description: '旅游活动增加带来污染、噪音和生态干扰，船舶排放加速冰川融化，游客遗留大量垃圾。'
+            },
+            {
+                id: 'shipEmissions',
+                title: '船舶排放',
+                icon: '🚤',
+                description: '极地航运增加导致大量温室气体排放，形成黑碳沉降在冰面上，加速冰川融化。'
+            },
+            {
+                id: 'plasticWaste',
+                title: '塑料垃圾',
+                icon: '🗑️',
+                description: '塑料微粒和废弃物随洋流聚集极地，被海洋生物误食，导致死亡并通过食物链影响整个生态系统。'
+            }
+        ];
+
+        // 逻辑关系映射
+        const validChains = {
+            '全球变暖': ['冰川融化', '石油开采', '极地旅游'],
+            '冰川融化': ['海平面上升', '石油开采'],
+            '海平面上升': [],
+            '捕杀野生动物': ['海洋污染'],
+            '石油开采': ['石油泄漏'],
+            '石油泄漏': ['海洋污染', '塑料垃圾'],
+            '海洋污染': ['捕杀野生动物'],
+            '极地旅游': ['船舶排放', '塑料垃圾'],
+            '船舶排放': ['全球变暖'],
+            '塑料垃圾': ['海洋污染']
+        };
+
+        // DOM元素
+        const cardContainer = document.getElementById('cardContainer');
+        const chainContainer = document.getElementById('chainContainer');
+        const chainArea = document.getElementById('chainArea');
+        const drawCardsBtn = document.getElementById('drawCardsBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const validateBtn = document.getElementById('validateBtn');
+        const validationResult = document.getElementById('validationResult');
+        const drawnCardsEl = document.getElementById('drawnCards');
+        const chainLengthEl = document.getElementById('chainLength');
+        const validationStatus = document.getElementById('validationStatus');
+
+        // 当前游戏状态
+        let currentCards = [];
+        let chainCards = [];
+        let cardsDrawn = 0;
+        let chainLength = 0;
+
+        // 初始化游戏
+        function initGame() {
+            drawCardsBtn.addEventListener('click', drawCards);
+            resetBtn.addEventListener('click', resetChain);
+            validateBtn.addEventListener('click', validateChain);
+            
+            // 设置拖放事件
+            chainArea.addEventListener('dragover', handleDragOver);
+            chainArea.addEventListener('drop', handleDrop);
+            
+            // 初始状态
+            validationResult.textContent = "等待验证您的逻辑链条...";
+            validationResult.className = "validation-result";
+            updateStats();
+        }
+
+        // 随机抽取8张卡片
+        function drawCards() {
+            // 重置状态
+            resetChain();
+            currentCards = [];
+            chainCards = [];
+            
+            // 随机选择8张卡片
+            const shuffled = [...cardsData].sort(() => 0.5 - Math.random());
+            currentCards = shuffled.slice(0, 8);
+            cardsDrawn = 8;
+            
+            // 渲染卡片
+            renderCards();
+            
+            // 启用验证按钮
+            validateBtn.disabled = false;
+            
+            // 更新统计
+            updateStats();
+        }
+
+        // 渲染卡片到界面
+        function renderCards() {
+            cardContainer.innerHTML = '';
+            
+            currentCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.id = card.id;
+                cardElement.draggable = true;
+                cardElement.innerHTML = `
+                    <div class="card-icon">${card.icon}</div>
+                    <div class="card-title">${card.title}</div>
+                    <div class="card-desc">${card.description}</div>
+                `;
+                
+                // 设置拖拽事件
+                cardElement.addEventListener('dragstart', handleDragStart);
+                
+                // 添加双击事件
+                cardElement.addEventListener('dblclick', () => {
+                    addCardToChain(card);
+                });
+                
+                cardContainer.appendChild(cardElement);
+            });
+        }
+
+        // 添加卡片到链条
+        function addCardToChain(card) {
+            // 确保卡片只被添加一次
+            if (!chainCards.some(c => c.id === card.id)) {
+                // 添加卡片到链条
+                chainCards.push(card);
+                chainLength = chainCards.length;
+                
+                // 渲染链条
+                renderChain();
+                
+                // 更新统计
+                updateStats();
+            }
+        }
+
+        // 重置链条
+        function resetChain() {
+            chainContainer.innerHTML = '<div class="placeholder">双击卡片或拖拽到此处构建多米诺链条</div>';
+            chainCards = [];
+            chainLength = 0;
+            validationResult.textContent = "等待验证您的逻辑链条...";
+            validationResult.className = "validation-result";
+            validationStatus.textContent = "-";
+            updateStats();
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            drawnCardsEl.textContent = cardsDrawn;
+            chainLengthEl.textContent = chainLength;
+        }
+
+        // 拖拽开始处理
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.id);
+            setTimeout(() => {
+                e.target.style.opacity = '0.4';
+            }, 0);
+        }
+
+        // 拖拽悬停处理
+        function handleDragOver(e) {
+            e.preventDefault();
+            chainArea.classList.add('active');
+        }
+
+        // 放置卡片处理
+        function handleDrop(e) {
+            e.preventDefault();
+            chainArea.classList.remove('active');
+            
+            const id = e.dataTransfer.getData('text/plain');
+            const draggableElement = document.getElementById(id);
+            
+            // 恢复卡片样式
+            draggableElement.style.opacity = '1';
+            
+            // 添加卡片到链条
+            const cardData = cardsData.find(card => card.id === id);
+            addCardToChain(cardData);
+        }
+
+        // 渲染逻辑链条
+        function renderChain() {
+            chainContainer.innerHTML = '';
+            
+            if (chainCards.length === 0) {
+                chainContainer.innerHTML = '<div class="placeholder">双击卡片或拖拽到此处构建多米诺链条</div>';
+                return;
+            }
+            
+            chainCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'chain-card';
+                cardElement.innerHTML = `
+                    <div class="card-icon">${card.icon}</div>
+                    <div>${card.title}</div>
+                    <div class="remove-card" data-id="${card.id}">×</div>
+                `;
+                
+                // 添加移除事件
+                const removeBtn = cardElement.querySelector('.remove-card');
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const cardId = removeBtn.getAttribute('data-id');
+                    chainCards = chainCards.filter(c => c.id !== cardId);
+                    chainLength = chainCards.length;
+                    renderChain();
+                    updateStats();
+                });
+                
+                chainContainer.appendChild(cardElement);
+                
+                // 在卡片之间添加箭头（除了最后一个）
+                if (index < chainCards.length - 1) {
+                    const arrow = document.createElement('div');
+                    arrow.className = 'arrow';
+                    arrow.textContent = '→';
+                    chainContainer.appendChild(arrow);
+                }
+            });
+        }
+
+        // 验证逻辑链条
+        function validateChain() {
+            if (chainCards.length < 3) {
+                validationResult.textContent = "链条至少需要3张卡片进行验证！";
+                validationResult.className = "validation-result error";
+                validationStatus.textContent = "✗";
+                return;
+            }
+            
+            let isValid = true;
+            let message = "逻辑链条验证成功！✅\n\n";
+            
+            for (let i = 0; i < chainCards.length - 1; i++) {
+                const currentCard = chainCards[i].title;
+                const nextCard = chainCards[i + 1].title;
+                
+                if (validChains[currentCard] && validChains[currentCard].includes(nextCard)) {
+                    message += `✓ ${currentCard} → ${nextCard} 是有效连接\n`;
+                } else {
+                    isValid = false;
+                    message += `✗ ${currentCard} → ${nextCard} 不是有效连接\n`;
+                }
+            }
+            
+            // 显示验证结果
+            validationResult.className = `validation-result ${isValid ? 'success' : 'error'}`;
+            validationStatus.textContent = isValid ? "✓" : "✗";
+            
+            // 添加鼓励性消息
+            if (isValid) {
+                if (chainCards.length >= 5) {
+                    message += "\n🎉 太棒了！您构建了一个完整的极地环境问题链条！";
+                } else if (chainCards.length >= 3) {
+                    message += "\n👍 做得很好！您成功构建了有效的逻辑链条！";
+                }
+            } else {
+                message += "\n💡 提示：参考下方的示例链条，再试一次！";
+            }
+            
+            validationResult.textContent = message;
+        }
+
+        // 初始化游戏
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
